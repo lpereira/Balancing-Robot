@@ -1,0 +1,4 @@
+
+Directories:
+	Firmware/	Arduino sketch for the balancing robot
+	Transferidor/	Processing sketch for the angle measuring app
