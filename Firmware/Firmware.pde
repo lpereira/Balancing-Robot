@@ -88,7 +88,7 @@ class MotorController;       /* Controlador de Motor */
 class PIDWController;        /* Controlador PID */
 
 /* Definição para o callback de tarefa */
-typedef void (*TaskCallback)(TaskManager &);
+typedef void (*TaskCallback)();
 
 /****************************************************************************************************************/
 /** Classes *****************************************************************************************************/
@@ -143,8 +143,8 @@ private:
   /**
    * Executa uma iteração da tarefa.
    */
-  void inline run(TaskManager &tm) {
-    m_callback(tm);
+  void inline run() {
+    m_callback();
   }
 
 public:
@@ -237,7 +237,7 @@ public:
       task = &m_tasks[n_task];
 
       if (task->decrementCountdownBy(elapsedTime) <= 0) {
-        task->run(*this);
+        task->run();
         task->resetCountdown();
       }
     }
@@ -735,7 +735,7 @@ StatusLED status(STATUS_LED_GREEN, STATUS_LED_RED);
  * Tarefa de Equilíbrio
  * Responsável por manter o robô equilibrado.
  */
-void balance_task(TaskManager &tm)
+void balance_task()
 {
   double torque; 		        /* Torque a ser aplicado nos motores */
   int torqueLeft, torqueRight;
@@ -772,7 +772,7 @@ void balance_task(TaskManager &tm)
  * Tarefa de leitura do Joystick
  * Responsável por obter o estado atual do joystick, e entrar no modo de configuração.
  */
-void joystick_poll_task(TaskManager &tm)
+void joystick_poll_task()
 {
   /* Pede ao joystick que envie novo estado */
   joystick.update();
@@ -789,7 +789,7 @@ void joystick_poll_task(TaskManager &tm)
 /**
  * Tarefa de controle do LED.
  */
-void blink_status_task(TaskManager &tm)
+void blink_status_task()
 {
   static char led_status = false;
 
